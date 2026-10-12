@@ -1,0 +1,1167 @@
+<title>FleetMatch — منصة المركبات التجارية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#f0f4fa;
+  --bg2:#ffffff;
+  --bg3:#e8eef8;
+  --fg:#0a1628;
+  --fg2:#4a6080;
+  --fg3:#8aa0bc;
+  --blue:#1547c0;
+  --blue2:#1d5ce0;
+  --blue3:#2d7aff;
+  --blue-light:#dce8ff;
+  --blue-glass:rgba(21,71,192,0.08);
+  --accent:#f59e0b;
+  --accent2:#10b981;
+  --red:#e53e3e;
+  --border:#d0ddf0;
+  --shadow:0 2px 16px rgba(21,71,192,0.10);
+  --shadow2:0 8px 40px rgba(21,71,192,0.18);
+  --radius:16px;
+  --radius2:12px;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#080e1a;
+    --bg2:#0f1c30;
+    --bg3:#162440;
+    --fg:#e4eeff;
+    --fg2:#7a9abf;
+    --fg3:#3a5a7a;
+    --blue:#3b7fff;
+    --blue2:#4d8fff;
+    --blue3:#6aaeff;
+    --blue-light:#0f1e38;
+    --blue-glass:rgba(59,127,255,0.10);
+    --border:#1a2d4a;
+    --shadow:0 2px 16px rgba(0,0,0,0.4);
+    --shadow2:0 8px 40px rgba(0,0,0,0.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#080e1a;--bg2:#0f1c30;--bg3:#162440;
+  --fg:#e4eeff;--fg2:#7a9abf;--fg3:#3a5a7a;
+  --blue:#3b7fff;--blue2:#4d8fff;--blue3:#6aaeff;
+  --blue-light:#0f1e38;--blue-glass:rgba(59,127,255,0.10);
+  --border:#1a2d4a;
+  --shadow:0 2px 16px rgba(0,0,0,0.4);
+  --shadow2:0 8px 40px rgba(0,0,0,0.5);
+  color-scheme:dark;
+}
+
+body{background:var(--bg);color:var(--fg);font-family:'Cairo','Inter',system-ui,sans-serif;direction:rtl;line-height:1.6;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:200;
+}
+@media(prefers-color-scheme:dark){nav{background:rgba(8,14,26,0.88)}}
+:root[data-theme="dark"] nav{background:rgba(8,14,26,0.88)}
+.nav-inner{max-width:1240px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,#1547c0 0%,#2d7aff 100%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(21,71,192,0.4);
+  flex-shrink:0;
+}
+.logo-mark svg{width:24px;height:24px;fill:#fff}
+.logo-text{font-size:20px;font-weight:900;color:var(--blue);letter-spacing:-0.5px;line-height:1}
+.logo-sub{font-size:10px;color:var(--fg3);font-weight:500;letter-spacing:0.03em}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-link{color:var(--fg2);text-decoration:none;font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;transition:all .2s;white-space:nowrap}
+.nav-link:hover{background:var(--blue-glass);color:var(--blue)}
+.nav-rfq{background:var(--blue);color:#fff!important;border-radius:10px;padding:9px 20px!important;font-weight:700!important;box-shadow:0 3px 12px rgba(21,71,192,0.35);transition:all .2s!important}
+.nav-rfq:hover{background:var(--blue2)!important;box-shadow:0 5px 18px rgba(21,71,192,0.45)!important;transform:translateY(-1px)}
+.btn-lang{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--fg2);transition:all .2s}
+.btn-lang:hover{border-color:var(--blue);color:var(--blue)}
+@media(max-width:700px){.nav-link:not(.nav-rfq){display:none}}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#04102b 0%,#0d2260 45%,#1547c0 80%,#1e7aff 100%);
+  color:#fff;padding:90px 24px 100px;position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-glow{
+  position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(45,122,255,.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-content{position:relative;max-width:820px;margin:0 auto;text-align:center}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:100px;padding:7px 18px;font-size:13px;font-weight:600;
+  margin-bottom:28px;backdrop-filter:blur(8px);
+}
+.hero h1{font-size:clamp(30px,5.5vw,58px);font-weight:900;line-height:1.15;margin-bottom:20px;text-wrap:balance;letter-spacing:-1px}
+.hero h1 em{font-style:normal;color:#fbbf24}
+.hero-sub{font-size:clamp(15px,2.2vw,18px);opacity:.85;max-width:580px;margin:0 auto 40px}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-gold{
+  background:linear-gradient(135deg,#f59e0b,#fbbf24);
+  color:#0a1628;font-weight:800;font-size:16px;padding:15px 34px;
+  border-radius:12px;border:none;cursor:pointer;font-family:inherit;
+  box-shadow:0 4px 24px rgba(245,158,11,.45);transition:all .2s;
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.55)}
+.btn-ghost{
+  background:rgba(255,255,255,.1);color:#fff;font-weight:700;font-size:16px;
+  padding:15px 34px;border-radius:12px;border:1px solid rgba(255,255,255,.25);
+  cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);transition:all .2s;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.18)}
+.hero-stats{
+  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+  margin-top:60px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);border-radius:20px;
+  backdrop-filter:blur(12px);overflow:hidden;max-width:700px;margin-left:auto;margin-right:auto;
+}
+.hstat{flex:1;min-width:140px;padding:20px 16px;text-align:center;border-left:1px solid rgba(255,255,255,.1)}
+.hstat:last-child{border-left:none}
+.hstat-num{font-size:28px;font-weight:900;display:block;color:#fbbf24;font-variant-numeric:tabular-nums}
+.hstat-lbl{font-size:12px;opacity:.75;font-weight:500}
+
+/* ── SECTIONS ── */
+section{padding:72px 24px}
+.container{max-width:1240px;margin:0 auto}
+.sec-head{text-align:center;margin-bottom:52px}
+.sec-tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px;border:1px solid var(--blue-light)}
+.sec-head h2{font-size:clamp(24px,3.5vw,38px);font-weight:900;margin-bottom:12px;text-wrap:balance;letter-spacing:-.5px}
+.sec-head p{color:var(--fg2);font-size:16px;max-width:520px;margin:0 auto}
+
+/* ── FILTERS ── */
+.filters-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:32px;box-shadow:var(--shadow)}
+.filter-row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end}
+.fg{flex:1;min-width:160px}
+.fg label{display:block;font-size:11px;font-weight:800;color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{background:var(--bg);border:1.5px solid var(--border);border-radius:100px;padding:7px 15px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--fg2);transition:all .15s;white-space:nowrap}
+.chip:hover{border-color:var(--blue);color:var(--blue)}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 2px 10px rgba(21,71,192,.3)}
+
+/* ── VEHICLE CARDS ── */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.vcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:all .25s;cursor:default}
+.vcard:hover{transform:translateY(-5px);box-shadow:var(--shadow2);border-color:var(--blue)}
+.vcard[hidden]{display:none}
+.vcard-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--bg3)}
+.vcard-img-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--blue-light),var(--bg3));display:flex;align-items:center;justify-content:center;font-size:80px;position:relative}
+.vbadges{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.vbadge{padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;backdrop-filter:blur(10px)}
+.b-jp{background:rgba(220,38,38,.88);color:#fff}
+.b-in{background:rgba(16,185,129,.88);color:#fff}
+.b-cn{background:rgba(245,158,11,.88);color:#0a1628}
+.b-type{background:rgba(10,22,40,.72);color:#e4eeff}
+.vcard-body{padding:22px}
+.vcard-brand{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:3px}
+.vcard-name{font-size:19px;font-weight:900;margin-bottom:2px;letter-spacing:-.3px}
+.vcard-en{font-size:12px;color:var(--fg3);margin-bottom:14px;font-family:'Inter',sans-serif;font-weight:500}
+.vspecs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.vspec{background:var(--bg);border-radius:10px;padding:9px 12px}
+.vspec-k{font-size:10px;color:var(--fg3);font-weight:600;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em}
+.vspec-v{font-size:13px;font-weight:800;color:var(--fg)}
+.vdealer{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--border);margin-bottom:14px}
+.vdealer-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);flex-shrink:0;box-shadow:0 0 6px var(--accent2)}
+.vdealer-name{font-size:12px;color:var(--fg2);font-weight:600}
+.vspec-label{font-size:11px;font-weight:700;color:var(--fg3);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 5px}
+.app-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.app-chip{background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--fg2);transition:all .15s;white-space:nowrap}
+.app-chip:hover{border-color:var(--blue);color:var(--blue)}
+.app-chip.on{background:var(--blue-light);border-color:var(--blue);color:var(--blue)}
+.app-chip.chassis-only{border-style:dashed}
+.tail-lift-row{display:flex;align-items:center;gap:7px;margin:7px 0 2px;cursor:pointer;width:fit-content}
+.tail-lift-row input[type=checkbox]{accent-color:var(--blue);width:15px;height:15px;cursor:pointer}
+.tail-lift-row span{font-size:12px;font-weight:700;color:var(--fg2)}
+.btn-rfq-card{width:100%;background:linear-gradient(135deg,var(--blue),var(--blue3));color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:800;font-family:inherit;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.btn-rfq-card:hover{opacity:.9;transform:translateY(-1px)}
+
+/* ── HOW ── */
+.how-sec{background:linear-gradient(180deg,var(--bg) 0%,var(--bg3) 100%)}
+.steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue3))}
+.step-ico{font-size:36px;margin-bottom:14px;display:block}
+.step-n{position:absolute;top:18px;left:18px;width:26px;height:26px;background:var(--blue-light);color:var(--blue);border-radius:8px;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.step h3{font-size:17px;font-weight:800;margin-bottom:8px}
+.step p{font-size:13px;color:var(--fg2);line-height:1.7}
+
+/* ── DEALERS ── */
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.dcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;box-shadow:var(--shadow);transition:all .2s;position:relative;overflow:hidden}
+.dcard:hover{transform:translateY(-4px);box-shadow:var(--shadow2);border-color:var(--blue)}
+.dcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.dcard.hino::after{background:linear-gradient(90deg,#c0392b,#e74c3c)}
+.dcard.isuzu::after{background:linear-gradient(90deg,#1547c0,#2d7aff)}
+.dcard.fuso::after{background:linear-gradient(90deg,#0a1628,#1547c0)}
+.dcard.leyland::after{background:linear-gradient(90deg,#10b981,#34d399)}
+.dcard.eicher::after{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.dcard.toyota::after{background:linear-gradient(90deg,#c0392b,#e60012)}
+.dlogo{width:64px;height:64px;border-radius:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff}
+.dl-hino{background:linear-gradient(135deg,#c0392b,#e74c3c)}
+.dl-isuzu{background:linear-gradient(135deg,#1547c0,#2d7aff)}
+.dl-fuso{background:linear-gradient(135deg,#0a1628,#1547c0)}
+.dl-leyland{background:linear-gradient(135deg,#059669,#10b981)}
+.dl-eicher{background:linear-gradient(135deg,#d97706,#f59e0b)}
+.dcard h3{font-size:20px;font-weight:900;margin-bottom:4px}
+.dcard-sub{font-size:13px;color:var(--fg2);margin-bottom:12px;font-weight:500}
+.dcard-agent{background:var(--blue-glass);border:1px solid var(--blue-light);border-radius:10px;padding:9px 13px;margin-bottom:14px}
+.dcard-agent strong{font-size:13px;color:var(--blue);display:block;font-weight:800}
+.dcard-agent span{font-size:11px;color:var(--fg3)}
+.dchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.dchip{background:var(--bg3);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--fg2)}
+.dorigin{font-size:12px;font-weight:700;color:var(--blue)}
+
+/* ── CTA ── */
+.cta-sec{
+  background:linear-gradient(135deg,#04102b 0%,#0d2260 50%,#1547c0 100%);
+  color:#fff;text-align:center;padding:80px 24px;position:relative;overflow:hidden;
+}
+.cta-sec::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(45,122,255,.3) 0%,transparent 70%);
+}
+.cta-inner{position:relative;max-width:600px;margin:0 auto}
+.cta-icon{font-size:60px;margin-bottom:20px;display:block}
+.cta-sec h2{font-size:clamp(26px,4vw,44px);font-weight:900;margin-bottom:14px;letter-spacing:-.5px}
+.cta-sec p{opacity:.85;font-size:17px;margin-bottom:36px}
+
+/* ── MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(4,16,43,.7);backdrop-filter:blur(6px);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px}
+.overlay[hidden]{display:none}
+.modal{background:var(--bg2);border-radius:20px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;padding:36px 32px;border:1px solid var(--border);box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative}
+.modal-x{position:absolute;top:14px;left:14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--fg2);transition:all .2s}
+.modal-x:hover{background:var(--border)}
+.modal h2{font-size:22px;font-weight:900;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--fg3);margin-bottom:22px}
+.rfq-note{background:var(--blue-glass);border:1px solid var(--blue-light);border-radius:12px;padding:13px 16px;margin-bottom:22px;font-size:13px;color:var(--blue);font-weight:600;display:flex;gap:8px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg2b{margin-bottom:16px}
+.fg2b label{display:block;font-size:12px;font-weight:800;color:var(--fg2);margin-bottom:6px;letter-spacing:.03em}
+.fg2b input,.fg2b select,.fg2b textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--fg);font-family:inherit;transition:border-color .2s;resize:vertical}
+.fg2b input:focus,.fg2b select:focus,.fg2b textarea:focus{outline:none;border-color:var(--blue)}
+.btn-send{width:100%;background:linear-gradient(135deg,var(--blue),var(--blue3));color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:900;font-family:inherit;cursor:pointer;transition:all .2s;margin-top:6px;letter-spacing:.02em}
+.btn-send:hover{opacity:.92;transform:translateY(-1px)}
+.succ{text-align:center;padding:10px 0}
+.succ-ico{font-size:68px;display:block;margin-bottom:16px}
+.succ h3{font-size:22px;font-weight:900;margin-bottom:8px}
+.succ p{color:var(--fg2);font-size:14px;line-height:1.8}
+.succ[hidden]{display:none}
+.form-wrap[hidden]{display:none}
+
+/* ── FOOTER ── */
+footer{background:#04102b;color:#5a80aa;padding:52px 24px 32px}
+.footer-inner{max-width:1240px;margin:0 auto}
+.ftop{display:flex;gap:48px;flex-wrap:wrap;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid #0d2260}
+.fbrand{flex:2;min-width:220px}
+.fbrand-name{font-size:22px;font-weight:900;color:#fff;margin-bottom:10px}
+.fbrand p{font-size:13px;line-height:1.8}
+.fcol{flex:1;min-width:150px}
+.fcol h4{color:#fff;font-size:14px;font-weight:800;margin-bottom:14px}
+.fcol ul{list-style:none}
+.fcol ul li{margin-bottom:9px}
+.fcol ul li a{color:#5a80aa;text-decoration:none;font-size:13px;transition:color .2s}
+.fcol ul li a:hover{color:#fff}
+.fbot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.fbot p{font-size:12px}
+.ftags{display:flex;gap:7px;flex-wrap:wrap}
+.ftag{background:#0d2260;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:700;color:#5a80aa}
+
+@media(max-width:640px){
+  .frow{grid-template-columns:1fr}
+  .modal{padding:24px 18px}
+  .hstat{min-width:100px}
+  .ftop{flex-direction:column;gap:24px}
+  .filter-row{flex-direction:column}
+}
+html{scroll-behavior:smooth}
+</style>
+
+<!-- NAV -->
+<nav>
+<div class="nav-inner">
+  <a class="logo" href="#">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+    </div>
+    <div>
+      <div class="logo-text">FleetMatch</div>
+      <div class="logo-sub" id="nsub">منصة المركبات التجارية — قطر</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <a href="#vehicles" class="nav-link" id="nl1">المركبات</a>
+    <a href="#how" class="nav-link" id="nl2">كيف يعمل</a>
+    <a href="#dealers" class="nav-link" id="nl3">الوكلاء</a>
+    <a href="#" class="nav-link nav-rfq" id="nl4" onclick="openRFQ(null);return false">📋 طلب عرض سعر</a>
+    <button class="btn-lang" onclick="toggleLang()" id="lbtn">EN</button>
+  </div>
+</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🇶🇦 <span id="hbadge">منصة B2B للمركبات التجارية — قطر</span></div>
+    <h1 id="hh1">ابحث عن <em>أفضل المركبات التجارية</em><br>واحصل على عروض أسعار فورية</h1>
+    <p class="hero-sub" id="hsub">شاحنات • باصات • آليات ثقيلة — أرسل طلب عرض السعر لجميع الوكلاء في آنٍ واحد وقارن بالذكاء الاصطناعي</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="openRFQ(null)" id="hb1">🚀 أرسل طلب عرض سعر</button>
+      <button class="btn-ghost" onclick="document.getElementById('vehicles').scrollIntoView({behavior:'smooth'})" id="hb2">تصفح المركبات</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-num">5+</span><span class="hstat-lbl" id="hs1">وكلاء معتمدون</span></div>
+      <div class="hstat"><span class="hstat-num">80+</span><span class="hstat-lbl" id="hs2">موديل متاح</span></div>
+      <div class="hstat"><span class="hstat-num">24h</span><span class="hstat-lbl" id="hs3">وقت الاستجابة</span></div>
+      <div class="hstat"><span class="hstat-num">مجاني</span><span class="hstat-lbl" id="hs4">الخدمة للمشترين</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- VEHICLES -->
+<section id="vehicles">
+<div class="container">
+  <div class="sec-head">
+    <div class="sec-tag" id="st1">المركبات المتاحة</div>
+    <h2 id="sh1">تصفح حسب النوع والماركة</h2>
+    <p id="sp1">اختر المركبة التي تناسب احتياجات أعمالك وأرسل طلب عرض السعر مباشرة</p>
+  </div>
+
+  <div class="filters-wrap">
+    <div class="filter-row">
+      <div class="fg">
+        <label id="fl-type">النوع</label>
+        <div class="chips" id="tc">
+          <button class="chip on" data-t="all" onclick="filt(this,'t')">الكل</button>
+          <button class="chip" data-t="truck" onclick="filt(this,'t')">🚛 شاحنات</button>
+          <button class="chip" data-t="bus" onclick="filt(this,'t')">🚌 باصات</button>
+          <button class="chip" data-t="heavy" onclick="filt(this,'t')">🏗️ آليات</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label id="fl-orig">المنشأ</label>
+        <div class="chips" id="oc">
+          <button class="chip on" data-o="all" onclick="filt(this,'o')">الكل</button>
+          <button class="chip" data-o="jp" onclick="filt(this,'o')">🇯🇵 ياباني</button>
+          <button class="chip" data-o="in" onclick="filt(this,'o')">🇮🇳 هندي</button>
+          <button class="chip" data-o="cn" onclick="filt(this,'o')">🇨🇳 صيني</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label id="fl-brand">الماركة</label>
+        <div class="chips" id="bc">
+          <button class="chip on" data-b="all" onclick="filt(this,'b')">الكل</button>
+          <button class="chip" data-b="hino" onclick="filt(this,'b')">Hino</button>
+          <button class="chip" data-b="isuzu" onclick="filt(this,'b')">Isuzu</button>
+          <button class="chip" data-b="fuso" onclick="filt(this,'b')">Fuso</button>
+          <button class="chip" data-b="leyland" onclick="filt(this,'b')">Ashok Leyland</button>
+          <button class="chip" data-b="eicher" onclick="filt(this,'b')">Eicher</button>
+          <button class="chip" data-b="toyota" onclick="filt(this,'b')">Toyota</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vgrid" id="vgrid">
+
+    <!-- HINO 300 -->
+    <div class="vcard" data-t="truck" data-o="jp" data-b="hino">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdoaW4iIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U3NGMzYyIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2hpbikiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5IPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkhpbm8gMzAwPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINiu2YHZitmBPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdoaW4iIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U3NGMzYyIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2hpbikiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5IPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkhpbm8gMzAwPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINiu2YHZitmBPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" alt="Hino 300" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="vcard-img-placeholder" style="display:none">🚛<div class="vbadges"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">شاصي خفيف</span></div></div>
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">شاصي خفيف</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Hino — هينو</div>
+        <div class="vcard-name">هينو 300 — شاصي</div>
+        <div class="vcard-en">Hino 300 Series — Chassis / Light Duty</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">N04C ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">136–150 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الشاصي</div><div class="vspec-v">قصير / طويل</div></div>
+        </div>
+        <!-- Application selector -->
+        <div style="margin-bottom:12px">
+          <div class="vspec-label">الأبليكيشن</div>
+          <div class="app-chips" id="app300">
+            <button class="app-chip on" onclick="selApp(this,'app300')">📦 كارقو</button>
+            <button class="app-chip" onclick="selApp(this,'app300')">❄️ مبرد</button>
+            <button class="app-chip" onclick="selApp(this,'app300')">🧊 فريزر</button>
+            <button class="app-chip" onclick="selApp(this,'app300')">🛻 بيك آب</button>
+            <button class="app-chip" onclick="selApp(this,'app300')">🔧 سطحة</button>
+            <button class="app-chip" onclick="selApp(this,'app300')">🗑️ كومباكتر</button>
+            <button class="app-chip" onclick="selApp(this,'app300')">💧 خزان</button>
+            <button class="app-chip chassis-only" onclick="selApp(this,'app300')">🔩 شاصي فقط</button>
+          </div>
+          <label class="tail-lift-row"><input type="checkbox" id="tl300"><span>🏋️ إضافة تيل ليفت</span></label>
+        </div>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="ton300">
+          <button class="app-chip" onclick="selApp(this,'ton300')">4 طن</button>
+          <button class="app-chip on" onclick="selApp(this,'ton300')">5 طن</button>
+          <button class="app-chip" onclick="selApp(this,'ton300')">6 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: حمد ومحمد الفطيم — Al Futtaim</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('هينو 300','app300','ton300','tl300')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- HINO 500 -->
+    <div class="vcard" data-t="truck" data-o="jp" data-b="hino">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdoaW4iIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U3NGMzYyIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2hpbikiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5IPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkhpbm8gNTAwPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINmF2KrZiNiz2Lc8L3RleHQ+CiAgPHJlY3QgeD0iMjIwIiB5PSIyNDAiIHdpZHRoPSIxNjAiIGhlaWdodD0iMiIgcng9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zKSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjc4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GbGVldE1hdGNoLmlvIOKAlCBRYXRhcjwvdGV4dD4KPC9zdmc+" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdoaW4iIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U3NGMzYyIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2hpbikiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5IPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkhpbm8gNTAwPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINmF2KrZiNiz2Lc8L3RleHQ+CiAgPHJlY3QgeD0iMjIwIiB5PSIyNDAiIHdpZHRoPSIxNjAiIGhlaWdodD0iMiIgcng9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zKSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjc4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GbGVldE1hdGNoLmlvIOKAlCBRYXRhcjwvdGV4dD4KPC9zdmc+" alt="Hino 500" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">شاصي متوسط</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Hino — هينو</div>
+        <div class="vcard-name">هينو 500 — شاصي</div>
+        <div class="vcard-en">Hino 500 Series — Chassis / Medium Duty</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">J08E ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">210–280 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الشاصي</div><div class="vspec-v">متوسط / طويل</div></div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="vspec-label">الأبليكيشن</div>
+          <div class="app-chips" id="app500">
+            <button class="app-chip on" onclick="selApp(this,'app500')">📦 كارقو</button>
+            <button class="app-chip" onclick="selApp(this,'app500')">❄️ مبرد</button>
+            <button class="app-chip" onclick="selApp(this,'app500')">🧊 فريزر</button>
+            <button class="app-chip" onclick="selApp(this,'app500')">🔧 سطحة</button>
+            <button class="app-chip" onclick="selApp(this,'app500')">🗑️ كومباكتر</button>
+            <button class="app-chip" onclick="selApp(this,'app500')">💧 خزان</button>
+            <button class="app-chip" onclick="selApp(this,'app500')">🏗️ رافعة كرين</button>
+            <button class="app-chip chassis-only" onclick="selApp(this,'app500')">🔩 شاصي فقط</button>
+          </div>
+          <label class="tail-lift-row"><input type="checkbox" id="tl500"><span>🏋️ إضافة تيل ليفت</span></label>
+        </div>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="ton500">
+          <button class="app-chip" onclick="selApp(this,'ton500')">8 طن</button>
+          <button class="app-chip on" onclick="selApp(this,'ton500')">10 طن</button>
+          <button class="app-chip" onclick="selApp(this,'ton500')">12 طن</button>
+          <button class="app-chip" onclick="selApp(this,'ton500')">15 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: حمد ومحمد الفطيم — Al Futtaim</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('هينو 500','app500','ton500','tl500')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- ASHOK LEYLAND BUS -->
+    <div class="vcard" data-t="bus" data-o="in" data-b="leyland">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdsZXkiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMDU5NjY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzEwYjk4MSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2xleSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5BTDwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjE3NSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5Bc2hvayBMZXlsYW5kPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qMINio2KfYtTwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdsZXkiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMDU5NjY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzEwYjk4MSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2xleSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5BTDwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjE3NSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5Bc2hvayBMZXlsYW5kPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qMINio2KfYtTwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" alt="Ashok Leyland Bus" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-in">🇮🇳 هندي</span><span class="vbadge b-type">باص</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Ashok Leyland — أشوك ليلاند</div>
+        <div class="vcard-name">أشوك ليلاند باص</div>
+        <div class="vcard-en">Ashok Leyland Staff / City Bus</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">H-Series ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">التكييف</div><div class="vspec-v">مركزي كامل</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الاستخدام</div><div class="vspec-v">موظفين / مدارس</div></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div class="vspec-label">عدد الركاب</div>
+          <div class="app-chips" id="pal">
+            <button class="app-chip" onclick="selApp(this,'pal')">25 راكب</button>
+            <button class="app-chip on" onclick="selApp(this,'pal')">33 راكب</button>
+            <button class="app-chip" onclick="selApp(this,'pal')">45 راكب</button>
+            <button class="app-chip" onclick="selApp(this,'pal')">64 راكب</button>
+          </div>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: حمد ومحمد الفطيم — Al Futtaim</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('أشوك ليلاند باص','pal',null)">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- ASHOK LEYLAND TRUCK -->
+    <div class="vcard" data-t="truck" data-o="in" data-b="leyland">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdsZXkiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMDU5NjY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzEwYjk4MSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2xleSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5BTDwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjE3NSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5Bc2hvayBMZXlsYW5kPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINi02KfYtdmKPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdsZXkiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMDU5NjY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzEwYjk4MSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2xleSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5BTDwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjE3NSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5Bc2hvayBMZXlsYW5kPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINi02KfYtdmKPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" alt="Ashok Leyland Truck" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-in">🇮🇳 هندي</span><span class="vbadge b-type">شاصي ثقيل</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Ashok Leyland — أشوك ليلاند</div>
+        <div class="vcard-name">أشوك ليلاند — شاصي</div>
+        <div class="vcard-en">Ashok Leyland Heavy Chassis</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">Neptune ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">280–350 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الشاصي</div><div class="vspec-v">متوسط / طويل</div></div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="vspec-label">الأبليكيشن</div>
+          <div class="app-chips" id="appAL">
+            <button class="app-chip on" onclick="selApp(this,'appAL')">📦 كارقو</button>
+            <button class="app-chip" onclick="selApp(this,'appAL')">❄️ مبرد</button>
+            <button class="app-chip" onclick="selApp(this,'appAL')">🏗️ مقلب</button>
+            <button class="app-chip" onclick="selApp(this,'appAL')">🔧 سطحة</button>
+            <button class="app-chip" onclick="selApp(this,'appAL')">🗑️ كومباكتر</button>
+            <button class="app-chip" onclick="selApp(this,'appAL')">💧 خزان</button>
+            <button class="app-chip chassis-only" onclick="selApp(this,'appAL')">🔩 شاصي فقط</button>
+          </div>
+          <label class="tail-lift-row"><input type="checkbox" id="tlAL"><span>🏋️ إضافة تيل ليفت</span></label>
+        </div>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="tonAL">
+          <button class="app-chip" onclick="selApp(this,'tonAL')">16 طن</button>
+          <button class="app-chip on" onclick="selApp(this,'tonAL')">20 طن</button>
+          <button class="app-chip" onclick="selApp(this,'tonAL')">25 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: حمد ومحمد الفطيم — Al Futtaim</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('أشوك ليلاند شاصي','appAL','tonAL','tlAL')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- ISUZU NPR -->
+    <div class="vcard" data-t="truck" data-o="jp" data-b="isuzu">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imdpc3UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTU0N2MwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkN2FmZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2lzdSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5JPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPklzdXp1IE5QUjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+amyDYrtmB2YrZgTwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imdpc3UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTU0N2MwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkN2FmZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2lzdSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5JPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPklzdXp1IE5QUjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+amyDYrtmB2YrZgTwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" alt="Isuzu NPR" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">شاصي خفيف</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Isuzu — إيسوزو</div>
+        <div class="vcard-name">إيسوزو NPR — شاصي</div>
+        <div class="vcard-en">Isuzu NPR — Chassis / Light Duty</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">4HK1 ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">150–180 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الشاصي</div><div class="vspec-v">قصير / طويل</div></div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="vspec-label">الأبليكيشن</div>
+          <div class="app-chips" id="appNPR">
+            <button class="app-chip on" onclick="selApp(this,'appNPR')">📦 كارقو</button>
+            <button class="app-chip" onclick="selApp(this,'appNPR')">❄️ مبرد</button>
+            <button class="app-chip" onclick="selApp(this,'appNPR')">🧊 فريزر</button>
+            <button class="app-chip" onclick="selApp(this,'appNPR')">🛻 بيك آب</button>
+            <button class="app-chip" onclick="selApp(this,'appNPR')">💧 خزان</button>
+            <button class="app-chip chassis-only" onclick="selApp(this,'appNPR')">🔩 شاصي فقط</button>
+          </div>
+          <label class="tail-lift-row"><input type="checkbox" id="tlNPR"><span>🏋️ إضافة تيل ليفت</span></label>
+        </div>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="tonNPR">
+          <button class="app-chip" onclick="selApp(this,'tonNPR')">3 طن</button>
+          <button class="app-chip on" onclick="selApp(this,'tonNPR')">4 طن</button>
+          <button class="app-chip" onclick="selApp(this,'tonNPR')">5 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: المناعي للتجارة — Mannai Trading</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('إيسوزو NPR','appNPR','tonNPR','tlNPR')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- ISUZU FVZ -->
+    <div class="vcard" data-t="truck" data-o="jp" data-b="isuzu">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imdpc3UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTU0N2MwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkN2FmZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2lzdSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5JPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPklzdXp1IEZWWjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+amyDYq9mC2YrZhDwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imdpc3UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTU0N2MwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkN2FmZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2lzdSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5JPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPklzdXp1IEZWWjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+amyDYq9mC2YrZhDwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" alt="Isuzu FVZ" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">شاصي ثقيل</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Isuzu — إيسوزو</div>
+        <div class="vcard-name">إيسوزو FVZ — شاصي</div>
+        <div class="vcard-en">Isuzu FVZ — Chassis / Heavy Duty</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">6UZ1 ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">280 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الشاصي</div><div class="vspec-v">طويل / إكسترا</div></div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="vspec-label">الأبليكيشن</div>
+          <div class="app-chips" id="appFVZ">
+            <button class="app-chip on" onclick="selApp(this,'appFVZ')">🏗️ مقلب</button>
+            <button class="app-chip" onclick="selApp(this,'appFVZ')">📦 كارقو</button>
+            <button class="app-chip" onclick="selApp(this,'appFVZ')">❄️ مبرد</button>
+            <button class="app-chip" onclick="selApp(this,'appFVZ')">🔧 سطحة</button>
+            <button class="app-chip" onclick="selApp(this,'appFVZ')">🗑️ كومباكتر</button>
+            <button class="app-chip" onclick="selApp(this,'appFVZ')">💧 خزان</button>
+            <button class="app-chip" onclick="selApp(this,'appFVZ')">🏗️ رافعة كرين</button>
+            <button class="app-chip chassis-only" onclick="selApp(this,'appFVZ')">🔩 شاصي فقط</button>
+          </div>
+          <label class="tail-lift-row"><input type="checkbox" id="tlFVZ"><span>🏋️ إضافة تيل ليفت</span></label>
+        </div>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="tonFVZ">
+          <button class="app-chip" onclick="selApp(this,'tonFVZ')">15 طن</button>
+          <button class="app-chip on" onclick="selApp(this,'tonFVZ')">18 طن</button>
+          <button class="app-chip" onclick="selApp(this,'tonFVZ')">20 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: المناعي للتجارة — Mannai Trading</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('إيسوزو FVZ','appFVZ','tonFVZ','tlFVZ')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- FUSO CANTER -->
+    <div class="vcard" data-t="truck" data-o="jp" data-b="fuso">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdmdXMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMGExNjI4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1NDdjMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2Z1cykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5GPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkZ1c28gQ2FudGVyPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINiu2YHZitmBPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdmdXMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMGExNjI4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1NDdjMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2Z1cykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5GPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkZ1c28gQ2FudGVyPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINiu2YHZitmBPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" alt="Fuso Canter" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">شاصي خفيف</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Fuso — فوسو</div>
+        <div class="vcard-name">فوسو كانتر — شاصي</div>
+        <div class="vcard-en">Fuso Canter — Chassis / Light Duty</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">4P10 ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">129–170 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الشاصي</div><div class="vspec-v">قصير / طويل</div></div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="vspec-label">الأبليكيشن</div>
+          <div class="app-chips" id="appCanter">
+            <button class="app-chip on" onclick="selApp(this,'appCanter')">📦 كارقو</button>
+            <button class="app-chip" onclick="selApp(this,'appCanter')">❄️ مبرد</button>
+            <button class="app-chip" onclick="selApp(this,'appCanter')">🧊 فريزر</button>
+            <button class="app-chip" onclick="selApp(this,'appCanter')">🛻 بيك آب</button>
+            <button class="app-chip" onclick="selApp(this,'appCanter')">🔧 سطحة</button>
+            <button class="app-chip" onclick="selApp(this,'appCanter')">🗑️ كومباكتر</button>
+            <button class="app-chip" onclick="selApp(this,'appCanter')">💧 خزان</button>
+            <button class="app-chip chassis-only" onclick="selApp(this,'appCanter')">🔩 شاصي فقط</button>
+          </div>
+          <label class="tail-lift-row"><input type="checkbox" id="tlCanter"><span>🏋️ إضافة تيل ليفت</span></label>
+        </div>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="tonCanter">
+          <button class="app-chip" onclick="selApp(this,'tonCanter')">4 طن</button>
+          <button class="app-chip on" onclick="selApp(this,'tonCanter')">5 طن</button>
+          <button class="app-chip" onclick="selApp(this,'tonCanter')">6 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: Qatar Automobiles Company</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('فوسو كانتر','appCanter','tonCanter','tlCanter')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- FUSO SUPER GREAT -->
+    <div class="vcard" data-t="truck" data-o="jp" data-b="fuso">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdmdXMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMGExNjI4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1NDdjMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2Z1cykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5GPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPlN1cGVyIEdyZWF0PC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINir2YLZitmEPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdmdXMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMGExNjI4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE1NDdjMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2Z1cykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5GPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPlN1cGVyIEdyZWF0PC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qbINir2YLZitmEPC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" alt="Fuso Super Great" loading="lazy" onerror="this.style.display='none'">
+
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">شاصي ثقيل</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Fuso — فوسو</div>
+        <div class="vcard-name">فوسو سوبر غريت — شاصي</div>
+        <div class="vcard-en">Fuso Super Great — Chassis / Heavy Duty</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">6R20 ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">460–510 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">أوتوماتيك</div></div>
+          <div class="vspec"><div class="vspec-k">الشاصي</div><div class="vspec-v">طويل / إكسترا</div></div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div class="vspec-label">الأبليكيشن</div>
+          <div class="app-chips" id="appSG">
+            <button class="app-chip on" onclick="selApp(this,'appSG')">📦 كارقو</button>
+            <button class="app-chip" onclick="selApp(this,'appSG')">🏗️ مقلب</button>
+            <button class="app-chip" onclick="selApp(this,'appSG')">❄️ مبرد</button>
+            <button class="app-chip" onclick="selApp(this,'appSG')">🔧 سطحة / برييك داون</button>
+            <button class="app-chip" onclick="selApp(this,'appSG')">💧 خزان</button>
+            <button class="app-chip" onclick="selApp(this,'appSG')">🏗️ رافعة كرين</button>
+            <button class="app-chip chassis-only" onclick="selApp(this,'appSG')">🔩 شاصي فقط</button>
+          </div>
+          <label class="tail-lift-row"><input type="checkbox" id="tlSG"><span>🏋️ إضافة تيل ليفت</span></label>
+        </div>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="tonSG">
+          <button class="app-chip" onclick="selApp(this,'tonSG')">25 طن</button>
+          <button class="app-chip on" onclick="selApp(this,'tonSG')">30 طن</button>
+          <button class="app-chip" onclick="selApp(this,'tonSG')">40 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: مؤسسة الوجبة — Al Wajba Est.</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('فوسو سوبر غريت','appSG','tonSG','tlSG')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- EICHER TRUCK -->
+    <div class="vcard" data-t="truck" data-o="in" data-b="eicher">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdlaWMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDk3NzA2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y1OWUwYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2VpYykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5FPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkVpY2hlciBQcm8gNjAwMDwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+amyDYtNin2LXZijwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdlaWMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDk3NzA2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y1OWUwYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2VpYykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5FPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkVpY2hlciBQcm8gNjAwMDwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+amyDYtNin2LXZijwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" alt="Eicher Truck" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-in">🇮🇳 هندي</span><span class="vbadge b-type">شاصي</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Eicher — إيشر</div>
+        <div class="vcard-name">إيشر Pro 6000 — شاصي</div>
+        <div class="vcard-en">Eicher Pro 6000 — Chassis / Heavy Duty</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">E6 ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">القدرة</div><div class="vspec-v">280–320 حصان</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+        </div>
+        <div class="vspec-label">الاستخدام</div>
+        <div class="app-chips" id="appEicher">
+          <button class="app-chip on" onclick="selApp(this,'appEicher')">📦 كارقو</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">❄️ مبرد</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">🧊 فريزر</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">🛻 بيك آب</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">🔧 سطحة</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">🗑️ كومباكتر</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">💧 خزان</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">🏗️ رافعة كرين</button>
+          <button class="app-chip" onclick="selApp(this,'appEicher')">🏗️ مقلب</button>
+          <button class="app-chip chassis-only" onclick="selApp(this,'appEicher')">🔩 شاصي فقط</button>
+        </div>
+        <label class="tail-lift-row"><input type="checkbox" id="tlEicher"><span>🏋️ إضافة تيل ليفت</span></label>
+        <div class="vspec-label">الحمولة</div>
+        <div class="app-chips" id="tonEicher">
+          <button class="app-chip on" onclick="selApp(this,'tonEicher')">16 طن</button>
+          <button class="app-chip" onclick="selApp(this,'tonEicher')">20 طن</button>
+          <button class="app-chip" onclick="selApp(this,'tonEicher')">25 طن</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: المناعي — Al Mana'i</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('إيشر Pro 6000','appEicher','tonEicher','tlEicher')">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- TOYOTA COASTER -->
+    <div class="vcard" data-t="bus" data-o="jp" data-b="toyota">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imd0b3kiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2MDAxMiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ3RveSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5UPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPlRveW90YSBDb2FzdGVyPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qMINmF2YrZhtmKINio2KfYtTwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imd0b3kiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2MDAxMiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ3RveSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5UPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPlRveW90YSBDb2FzdGVyPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMjE4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5qMINmF2YrZhtmKINio2KfYtTwvdGV4dD4KICA8cmVjdCB4PSIyMjAiIHk9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPHRleHQgeD0iMzAwIiB5PSIyNzgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkZsZWV0TWF0Y2guaW8g4oCUIFFhdGFyPC90ZXh0Pgo8L3N2Zz4=" alt="Toyota Coaster" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">ميني باص</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Toyota — تويوتا</div>
+        <div class="vcard-name">تويوتا كوستر</div>
+        <div class="vcard-en">Toyota Coaster — Minibus</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">1HZ ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">التكييف</div><div class="vspec-v">مركزي كامل</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+        </div>
+        <div class="vspec-label">عدد الركاب</div>
+        <div class="app-chips" id="pCoaster">
+          <button class="app-chip on" onclick="selApp(this,'pCoaster')">22 راكب</button>
+          <button class="app-chip" onclick="selApp(this,'pCoaster')">26 راكب</button>
+          <button class="app-chip" onclick="selApp(this,'pCoaster')">30 راكب</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: Al Abdulghani Motors W.L.L.</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('تويوتا كوستر','pCoaster',null)">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- TOYOTA HIACE -->
+    <div class="vcard" data-t="bus" data-o="jp" data-b="toyota">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imd0b3kiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2MDAxMiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ3RveSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5UPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPlRveW90YSBIaWFjZTwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+akCDZgdin2YY8L3RleHQ+CiAgPHJlY3QgeD0iMjIwIiB5PSIyNDAiIHdpZHRoPSIxNjAiIGhlaWdodD0iMiIgcng9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zKSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjc4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GbGVldE1hdGNoLmlvIOKAlCBRYXRhcjwvdGV4dD4KPC9zdmc+" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Imd0b3kiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzAzOTJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2MDAxMiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ3RveSkiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5UPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPlRveW90YSBIaWFjZTwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjIxOCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+akCDZgdin2YY8L3RleHQ+CiAgPHJlY3QgeD0iMjIwIiB5PSIyNDAiIHdpZHRoPSIxNjAiIGhlaWdodD0iMiIgcng9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zKSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjc4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GbGVldE1hdGNoLmlvIOKAlCBRYXRhcjwvdGV4dD4KPC9zdmc+" alt="Toyota Hiace" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-jp">🇯🇵 ياباني</span><span class="vbadge b-type">فان / ميني باص</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Toyota — تويوتا</div>
+        <div class="vcard-name">تويوتا هايس</div>
+        <div class="vcard-en">Toyota Hiace — Van / Commuter</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">1GD ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">التكييف</div><div class="vspec-v">مركزي</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+        </div>
+        <div class="vspec-label">عدد الركاب</div>
+        <div class="app-chips" id="pHiace">
+          <button class="app-chip on" onclick="selApp(this,'pHiace')">12 راكب</button>
+          <button class="app-chip" onclick="selApp(this,'pHiace')">15 راكب</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: Al Abdulghani Motors W.L.L.</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('تويوتا هايس','pHiace',null)">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+    <!-- EICHER BUS -->
+    <div class="vcard" data-t="bus" data-o="in" data-b="eicher">
+      <img class="vcard-img" data-orig="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdlaWMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDk3NzA2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y1OWUwYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2VpYykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5FPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkVpY2hlciBCdXM8L3RleHQ+CiAgPHRleHQgeD0iMzAwIiB5PSIyMTgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfmowg2KjYp9i1PC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzIwIiB2aWV3Qm94PSIwIDAgNjAwIDMyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdlaWMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDk3NzA2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y1OWUwYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzMjAiIGZpbGw9InVybCgjZ2VpYykiLz4KICA8cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iOTAwIj5FPC90ZXh0PgogIDx0ZXh0IHg9IjMwMCIgeT0iMTc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI5MDAiPkVpY2hlciBCdXM8L3RleHQ+CiAgPHRleHQgeD0iMzAwIiB5PSIyMTgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfmowg2KjYp9i1PC90ZXh0PgogIDxyZWN0IHg9IjIyMCIgeT0iMjQwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjIiIHJ4PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KICA8dGV4dCB4PSIzMDAiIHk9IjI3OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmxlZXRNYXRjaC5pbyDigJQgUWF0YXI8L3RleHQ+Cjwvc3ZnPg==" alt="Eicher Bus" loading="lazy" onerror="this.style.display='none'">
+      <div class="vbadges" style="position:absolute;top:10px;right:10px"><span class="vbadge b-in">🇮🇳 هندي</span><span class="vbadge b-type">باص</span></div>
+      <div class="vcard-body">
+        <div class="vcard-brand">Eicher — إيشر</div>
+        <div class="vcard-name">إيشر باص</div>
+        <div class="vcard-en">Eicher Bus — Staff / School</div>
+        <div class="vspecs">
+          <div class="vspec"><div class="vspec-k">المحرك</div><div class="vspec-v">E6 ديزل</div></div>
+          <div class="vspec"><div class="vspec-k">التكييف</div><div class="vspec-v">مركزي</div></div>
+          <div class="vspec"><div class="vspec-k">الناقل</div><div class="vspec-v">يدوي / أوتوماتيك</div></div>
+        </div>
+        <div class="vspec-label">عدد الركاب</div>
+        <div class="app-chips" id="pEicher">
+          <button class="app-chip on" onclick="selApp(this,'pEicher')">25 راكب</button>
+          <button class="app-chip" onclick="selApp(this,'pEicher')">33 راكب</button>
+          <button class="app-chip" onclick="selApp(this,'pEicher')">45 راكب</button>
+          <button class="app-chip" onclick="selApp(this,'pEicher')">64 راكب</button>
+        </div>
+        <div class="vdealer"><div class="vdealer-dot"></div><div class="vdealer-name">الوكيل: المناعي — Al Mana'i</div></div>
+        <button class="btn-rfq-card" onclick="openRFQApp('إيشر باص','pEicher',null)">📋 طلب عرض سعر</button>
+      </div>
+    </div>
+
+  </div><!-- vgrid -->
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-sec" id="how">
+<div class="container">
+  <div class="sec-head">
+    <div class="sec-tag" id="st2">آلية العمل</div>
+    <h2 id="sh2">4 خطوات للحصول على أفضل عرض</h2>
+    <p id="sp2">أسرع وأذكى من التواصل المباشر مع كل وكيل على حدة</p>
+  </div>
+  <div class="steps">
+    <div class="step"><span class="step-ico">🔍</span><div class="step-n">1</div><h3 id="sth1">اختر المركبة</h3><p id="stp1">تصفح الكتالوج وحدد النوع والمواصفات التي تناسب احتياجات شركتك</p></div>
+    <div class="step"><span class="step-ico">📋</span><div class="step-n">2</div><h3 id="sth2">أرسل الطلب</h3><p id="stp2">أملأ نموذج RFQ — الكمية والمواصفات وشروط التسليم المطلوبة</p></div>
+    <div class="step"><span class="step-ico">🤖</span><div class="step-n">3</div><h3 id="sth3">الذكاء الاصطناعي يوزع</h3><p id="stp3">يرسل النظام طلبك تلقائياً لجميع الوكلاء المؤهلين في نفس الوقت</p></div>
+    <div class="step"><span class="step-ico">📊</span><div class="step-n">4</div><h3 id="sth4">قارن واختر</h3><p id="stp4">تصلك العروض خلال 24 ساعة مع تقرير مقارنة شامل من الذكاء الاصطناعي</p></div>
+  </div>
+</div>
+</section>
+
+<!-- DEALERS -->
+<section id="dealers">
+<div class="container">
+  <div class="sec-head">
+    <div class="sec-tag" id="st3">الوكلاء المعتمدون</div>
+    <h2 id="sh3">شركاؤنا في قطر</h2>
+    <p id="sp3">نعمل مع أكبر وكلاء المركبات التجارية المعتمدين في دولة قطر</p>
+  </div>
+  <div class="dgrid">
+
+    <div class="dcard hino">
+      <div class="dlogo dl-hino">H</div>
+      <h3>Hino — هينو</h3>
+      <div class="dcard-sub">شاحنات يابانية خفيفة ومتوسطة</div>
+      <div class="dcard-agent"><strong>حمد ومحمد الفطيم</strong><span>Al Futtaim — Authorized Dealer</span></div>
+      <div class="dchips"><span class="dchip">🚛 300</span><span class="dchip">🚛 500</span></div>
+      <div class="dorigin">🇯🇵 ياباني المنشأ</div>
+    </div>
+
+    <div class="dcard isuzu">
+      <div class="dlogo dl-isuzu">I</div>
+      <h3>Isuzu — إيسوزو</h3>
+      <div class="dcard-sub">شاحنات يابانية خفيفة وثقيلة</div>
+      <div class="dcard-agent"><strong>المناعي للتجارة</strong><span>Mannai Trading — Authorized Dealer</span></div>
+      <div class="dchips"><span class="dchip">🚛 NPR</span><span class="dchip">🏗️ FVZ مقلب</span></div>
+      <div class="dorigin">🇯🇵 ياباني المنشأ</div>
+    </div>
+
+    <div class="dcard fuso">
+      <div class="dlogo dl-fuso">F</div>
+      <h3>Fuso — فوسو</h3>
+      <div class="dcard-sub">كانتر (حتى 6 طن) — Qatar Automobiles Company</div>
+      <div class="dcard-agent"><strong>Qatar Automobiles Company</strong><span>Fuso Canter — Light Duty</span></div>
+      <div class="dchips"><span class="dchip">🚛 كانتر حتى 6 طن</span></div>
+      <div class="dorigin">🇯🇵 ياباني المنشأ</div>
+    </div>
+
+    <div class="dcard fuso">
+      <div class="dlogo dl-fuso">W</div>
+      <h3>Fuso Super Great</h3>
+      <div class="dcard-sub">سوبر غريت (25–40 طن) — مؤسسة الوجبة</div>
+      <div class="dcard-agent"><strong>مؤسسة الوجبة — Al Wajba Est.</strong><span>Fuso Super Great — Heavy Duty</span></div>
+      <div class="dchips"><span class="dchip">🏗️ سوبر غريت 25–40 طن</span></div>
+      <div class="dorigin">🇯🇵 ياباني المنشأ</div>
+    </div>
+
+    <div class="dcard leyland">
+      <div class="dlogo dl-leyland">AL</div>
+      <h3>Ashok Leyland</h3>
+      <div class="dcard-sub">باصات وشاحنات هندية — موثوقة وفعّالة</div>
+      <div class="dcard-agent"><strong>حمد ومحمد الفطيم</strong><span>Al Futtaim — Authorized Dealer</span></div>
+      <div class="dchips"><span class="dchip">🚌 25 / 33 / 64 راكب</span><span class="dchip">🚛 شاحنات</span></div>
+      <div class="dorigin">🇮🇳 هندي المنشأ</div>
+    </div>
+
+    <div class="dcard toyota" style="--accent-c:#e60012">
+      <div class="dlogo" style="background:linear-gradient(135deg,#c0392b,#e60012)">T</div>
+      <h3>Toyota — تويوتا</h3>
+      <div class="dcard-sub">كوستر وهايس — باصات ياباني الأصل</div>
+      <div class="dcard-agent"><strong>Al Abdulghani Motors W.L.L.</strong><span>الوكيل الحصري لتويوتا في قطر</span></div>
+      <div class="dchips"><span class="dchip">🚌 كوستر</span><span class="dchip">🚐 هايس</span></div>
+      <div class="dorigin">🇯🇵 ياباني المنشأ</div>
+    </div>
+
+    <div class="dcard eicher">
+      <div class="dlogo dl-eicher">E</div>
+      <h3>Eicher — إيشر</h3>
+      <div class="dcard-sub">شاحنات وباصات هندية — اقتصادية وقوية</div>
+      <div class="dcard-agent"><strong>المناعي للسيارات</strong><span>Al Mana'i — Authorized Dealer</span></div>
+      <div class="dchips"><span class="dchip">🚛 Pro 6000</span><span class="dchip">🚌 باصات</span></div>
+      <div class="dorigin">🇮🇳 هندي المنشأ</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- CTA -->
+<div class="cta-sec">
+  <div class="cta-inner">
+    <span class="cta-icon">🚀</span>
+    <h2 id="cth">جاهز لطلب عرض السعر؟</h2>
+    <p id="ctp">أرسل طلبك الآن — مجاناً وبدون التزام — ويصل لجميع الوكلاء فوراً</p>
+    <button class="btn-gold" style="font-size:18px;padding:17px 44px" onclick="openRFQ(null)">📋 أرسل طلب عرض سعر الآن</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-inner">
+  <div class="ftop">
+    <div class="fbrand">
+      <div class="fbrand-name">🚛 FleetMatch.io</div>
+      <p>منصة B2B للمركبات التجارية في قطر<br>شاحنات • باصات • آليات ثقيلة<br>Commercial Vehicle B2B Platform — Qatar</p>
+    </div>
+    <div class="fcol">
+      <h4 id="fc1">المركبات</h4>
+      <ul>
+        <li><a href="#">شاحنات هينو</a></li>
+        <li><a href="#">شاحنات إيسوزو</a></li>
+        <li><a href="#">شاحنات فوسو</a></li>
+        <li><a href="#">باصات ليلاند</a></li>
+        <li><a href="#">إيشر</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4 id="fc2">الخدمات</h4>
+      <ul>
+        <li><a href="#">طلب عرض سعر RFQ</a></li>
+        <li><a href="#">مقارنة المواصفات</a></li>
+        <li><a href="#">تقرير PDF</a></li>
+        <li><a href="#">تسجيل وكيل</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>تواصل</h4>
+      <ul>
+        <li><a href="#">info@fleetmatch.io</a></li>
+        <li><a href="#">الدوحة، قطر</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2024 FleetMatch.io — جميع الحقوق محفوظة</p>
+    <div class="ftags">
+      <span class="ftag">🇶🇦 Qatar</span>
+      <span class="ftag">B2B Platform</span>
+      <span class="ftag">🤖 AI RFQ</span>
+      <span class="ftag">Commercial Vehicles</span>
+    </div>
+  </div>
+</div>
+</footer>
+
+<!-- RFQ MODAL -->
+<div class="overlay" id="modal" hidden>
+<div class="modal">
+  <button class="modal-x" onclick="closeRFQ()">✕</button>
+  <div class="form-wrap" id="fw">
+    <h2 id="mh">📋 طلب عرض سعر</h2>
+    <p class="modal-sub" id="ms">Request for Quotation — RFQ</p>
+    <div class="rfq-note" id="mn">🤖 سيرسل نظامنا طلبك تلقائياً لجميع الوكلاء المؤهلين — ستصلك العروض على بريدك خلال 24 ساعة</div>
+    <form onsubmit="submitRFQ(event)">
+      <div class="frow">
+        <div class="fg2b"><label id="ml1">الاسم الكامل *</label><input type="text" placeholder="محمد الأحمد / Mohammad Ahmad" required></div>
+        <div class="fg2b"><label id="ml2">اسم الشركة *</label><input type="text" placeholder="شركة قطر للمقاولات" required></div>
+      </div>
+      <div class="frow">
+        <div class="fg2b"><label id="ml3">البريد الإلكتروني *</label><input type="email" id="femail" placeholder="procurement@company.com.qa" required></div>
+        <div class="fg2b"><label id="ml4">رقم الهاتف</label><input type="tel" placeholder="+974 XXXX XXXX"></div>
+      </div>
+      <div class="fg2b"><label id="ml5">نوع المركبة *</label>
+        <select required>
+          <option value="">— اختر —</option>
+          <option id="mo1">شاحنة خفيفة (حتى 7 طن)</option>
+          <option id="mo2">شاحنة متوسطة (7–15 طن)</option>
+          <option id="mo3">شاحنة ثقيلة (15+ طن)</option>
+          <option id="mo4">باص / ميني باص</option>
+          <option id="mo5">آلية ثقيلة / معدات</option>
+        </select>
+      </div>
+      <div class="frow">
+        <div class="fg2b"><label id="ml6">الكمية *</label><input type="number" min="1" placeholder="مثال: 5" required></div>
+        <div class="fg2b"><label id="ml7">تفضيل المنشأ</label>
+          <select>
+            <option>— لا تفضيل —</option>
+            <option>🇯🇵 ياباني</option>
+            <option>🇮🇳 هندي</option>
+            <option>🇨🇳 صيني</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg2b"><label id="ml10">نوع الناقل</label>
+          <select id="ftrans">
+            <option value="">— لا تفضيل —</option>
+            <option>يدوي (Manual)</option>
+            <option>أوتوماتيك (Automatic)</option>
+          </select>
+        </div>
+        <div class="fg2b"><label id="ml11">سعة الباص (للباصات)</label>
+          <select id="fseats">
+            <option value="">— غير محدد —</option>
+            <option>25 راكب</option>
+            <option>33 راكب</option>
+            <option>64 راكب</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg2b"><label id="ml8">المواصفات والاشتراطات</label><textarea rows="3" id="fspecs" placeholder="تكييف، مقلب، رافعة، خزان، فتح جانبي..."></textarea></div>
+      <div class="frow">
+        <div class="fg2b"><label id="ml9">موعد التسليم</label>
+          <select>
+            <option>فوري — أسرع ما يمكن</option>
+            <option>خلال شهر</option>
+            <option>خلال 3 أشهر</option>
+            <option>خلال 6 أشهر</option>
+          </select>
+        </div>
+        <div class="fg2b"><label id="ml12">الضمان المطلوب</label>
+          <select id="fwarranty">
+            <option value="">— حسب الوكيل —</option>
+            <option>ضمان سنة</option>
+            <option>ضمان سنتين</option>
+            <option>ضمان 3 سنوات</option>
+            <option>عقد صيانة شامل</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn-send" id="msub">🚀 إرسال الطلب لجميع الوكلاء</button>
+    </form>
+  </div>
+  <div class="succ" id="succ" hidden>
+    <span class="succ-ico">✅</span>
+    <h3 id="suh">تم إرسال طلبك بنجاح!</h3>
+    <p id="sup">وصل طلبك للوكلاء: <strong>الفطيم، المناعي للتجارة، Qatar Automobiles، Al Abdulghani Motors</strong><br><br>ستصلك العروض على بريدك الإلكتروني خلال <strong>24 ساعة</strong><br><br>رقم طلبك: <strong id="rnum" style="color:var(--blue);font-size:18px"></strong></p>
+    <button style="margin-top:22px;padding:12px 28px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer" onclick="closeRFQ()">إغلاق</button>
+  </div>
+</div>
+</div>
+
+<script>
+let AR=true;
+const T={
+  nsub:['منصة المركبات التجارية — قطر','Commercial Vehicle Platform — Qatar'],
+  nl1:['المركبات','Vehicles'],nl2:['كيف يعمل','How It Works'],nl3:['الوكلاء','Dealers'],nl4:['📋 طلب عرض سعر','📋 Request Quote'],
+  hbadge:['منصة B2B للمركبات التجارية — قطر','Qatar B2B Commercial Vehicle Platform'],
+  hsub:['شاحنات • باصات • آليات ثقيلة — أرسل طلب عرض السعر لجميع الوكلاء في آنٍ واحد وقارن بالذكاء الاصطناعي','Trucks • Buses • Heavy Equipment — Send RFQ to all dealers at once and compare with AI'],
+  hb1:['🚀 أرسل طلب عرض سعر','🚀 Send RFQ Now'],hb2:['تصفح المركبات','Browse Vehicles'],
+  hs1:['وكلاء معتمدون','Authorized Dealers'],hs2:['موديل متاح','Models Available'],hs3:['وقت الاستجابة','Response Time'],hs4:['الخدمة للمشترين','Free for Buyers'],
+  st1:['المركبات المتاحة','Available Vehicles'],sh1:['تصفح حسب النوع والماركة','Browse by Type & Brand'],sp1:['اختر المركبة التي تناسب احتياجات أعمالك وأرسل طلب عرض السعر مباشرة','Select the right vehicle for your business and send RFQ directly'],
+  'fl-type':['النوع','Type'],'fl-orig':['المنشأ','Origin'],'fl-brand':['الماركة','Brand'],
+  st2:['آلية العمل','How It Works'],sh2:['4 خطوات للحصول على أفضل عرض','4 Steps to the Best Quote'],sp2:['أسرع وأذكى من التواصل المباشر مع كل وكيل على حدة','Faster and smarter than contacting each dealer individually'],
+  sth1:['اختر المركبة','Choose Vehicle'],stp1:['تصفح الكتالوج وحدد النوع والمواصفات التي تناسب احتياجات شركتك','Browse the catalog and select the type and specs your company needs'],
+  sth2:['أرسل الطلب','Submit Request'],stp2:['أملأ نموذج RFQ — الكمية والمواصفات وشروط التسليم المطلوبة','Fill in the RFQ form — quantity, specifications and delivery terms'],
+  sth3:['الذكاء الاصطناعي يوزع','AI Distributes'],stp3:['يرسل النظام طلبك تلقائياً لجميع الوكلاء المؤهلين في نفس الوقت','The system automatically sends your request to all qualified dealers simultaneously'],
+  sth4:['قارن واختر','Compare & Choose'],stp4:['تصلك العروض خلال 24 ساعة مع تقرير مقارنة شامل من الذكاء الاصطناعي','Receive quotes within 24 hours with a comprehensive AI comparison report'],
+  st3:['الوكلاء المعتمدون','Authorized Dealers'],sh3:['شركاؤنا في قطر','Our Partners in Qatar'],sp3:['نعمل مع أكبر وكلاء المركبات التجارية المعتمدين في دولة قطر','We work with the largest authorized commercial vehicle dealers in Qatar'],
+  cth:['جاهز لطلب عرض السعر؟','Ready to Request a Quote?'],ctp:['أرسل طلبك الآن — مجاناً وبدون التزام — ويصل لجميع الوكلاء فوراً','Send your request now — free and no commitment — reaches all dealers instantly'],
+  fc1:['المركبات','Vehicles'],fc2:['الخدمات','Services'],
+  mh:['📋 طلب عرض سعر','📋 Request for Quotation'],ms:['Request for Quotation — RFQ','طلب عرض السعر — RFQ'],
+  mn:['🤖 سيرسل نظامنا طلبك تلقائياً لجميع الوكلاء المؤهلين — ستصلك العروض على بريدك خلال 24 ساعة','🤖 Our system will automatically send your request to all qualified dealers — quotes will arrive in your email within 24 hours'],
+  ml1:['الاسم الكامل *','Full Name *'],ml2:['اسم الشركة *','Company Name *'],ml3:['البريد الإلكتروني *','Email Address *'],ml4:['رقم الهاتف','Phone Number'],
+  ml5:['نوع المركبة *','Vehicle Type *'],ml6:['الكمية *','Quantity *'],ml7:['تفضيل المنشأ','Origin Preference'],ml8:['المواصفات','Specifications'],ml9:['موعد التسليم','Delivery Timeline'],
+  mo1:['شاحنة خفيفة (حتى 7 طن)','Light Truck (up to 7 tons)'],mo2:['شاحنة متوسطة (7–15 طن)','Medium Truck (7–15 tons)'],mo3:['شاحنة ثقيلة (15+ طن)','Heavy Truck (15+ tons)'],mo4:['باص / ميني باص','Bus / Minibus'],mo5:['آلية ثقيلة / معدات','Heavy Equipment'],
+  msub:['🚀 إرسال الطلب لجميع الوكلاء','🚀 Send Request to All Dealers'],
+  suh:['تم إرسال طلبك بنجاح!','Your Request Was Sent Successfully!'],
+};
+
+function toggleLang(){
+  AR=!AR;
+  document.body.style.direction=AR?'rtl':'ltr';
+  document.getElementById('lbtn').textContent=AR?'EN':'ع';
+  const h1=document.getElementById('hh1');
+  h1.innerHTML=AR?'ابحث عن <em>أفضل المركبات التجارية</em><br>واحصل على عروض أسعار فورية':'Find the <em>Best Commercial Vehicles</em><br>and Get Instant Quotes';
+  Object.entries(T).forEach(([id,[ar,en]])=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    if(el.tagName==='OPTION')el.text=AR?ar:en;
+    else el.innerHTML=AR?ar:en;
+  });
+  const tc=document.querySelectorAll('#tc .chip');
+  [AR?'الكل':'All',AR?'🚛 شاحنات':'🚛 Trucks',AR?'🚌 باصات':'🚌 Buses',AR?'🏗️ آليات':'🏗️ Equipment'].forEach((l,i)=>{if(tc[i])tc[i].textContent=l});
+  const oc=document.querySelectorAll('#oc .chip');
+  [AR?'الكل':'All',AR?'🇯🇵 ياباني':'🇯🇵 Japanese',AR?'🇮🇳 هندي':'🇮🇳 Indian',AR?'🇨🇳 صيني':'🇨🇳 Chinese'].forEach((l,i)=>{if(oc[i])oc[i].textContent=l});
+}
+
+let AT='all',AO='all',AB='all';
+function filt(btn,g){
+  btn.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on');
+  if(g==='t')AT=btn.dataset.t;
+  if(g==='o')AO=btn.dataset.o;
+  if(g==='b')AB=btn.dataset.b;
+  document.querySelectorAll('.vcard').forEach(c=>{
+    c.hidden=!(
+      (AT==='all'||c.dataset.t===AT)&&
+      (AO==='all'||c.dataset.o===AO)&&
+      (AB==='all'||c.dataset.b===AB)
+    );
+  });
+}
+
+// Photos per application type (Unsplash, will load on Vercel)
+const APP_PHOTOS={
+  'كارقو':    'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80&auto=format&fit=crop',
+  'مبرد':     'https://images.unsplash.com/photo-1558618047-f4e40f9d4e47?w=600&q=80&auto=format&fit=crop',
+  'فريزر':    'https://images.unsplash.com/photo-1558618047-f4e40f9d4e47?w=600&q=80&auto=format&fit=crop',
+  'بيك آب':   'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80&auto=format&fit=crop',
+  'سطحة':     'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80&auto=format&fit=crop',
+  'سطحة / برييك داون': 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80&auto=format&fit=crop',
+  'كومباكتر': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop',
+  'خزان':     'https://images.unsplash.com/photo-1563520239648-e963bb5c5af4?w=600&q=80&auto=format&fit=crop',
+  'رافعة كرين':'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&auto=format&fit=crop',
+  'مقلب':     'https://images.unsplash.com/photo-1581888227599-779811939961?w=600&q=80&auto=format&fit=crop',
+  'شاصي فقط': null // keep default chassis photo
+};
+
+function selApp(btn,grp){
+  const wrap=document.getElementById(grp);
+  wrap.querySelectorAll('.app-chip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on');
+  // Update card photo based on selected application
+  const appText=btn.textContent.replace(/[📦❄️🧊🛻🔧🗑️💧🏗️🏋️🔩]/gu,'').trim();
+  const url=APP_PHOTOS[appText];
+  if(url!==undefined){
+    const card=wrap.closest('.vcard');
+    const img=card&&card.querySelector('.vcard-img');
+    if(img){
+      if(url){img.src=url;}
+      else{if(img.dataset.orig)img.src=img.dataset.orig;} // restore default
+    }
+  }
+}
+function openRFQApp(vehicle,appGrp,tonGrp,tlId){
+  let app=appGrp?document.querySelector('#'+appGrp+' .app-chip.on')?.textContent.trim():'';
+  let ton=tonGrp?document.querySelector('#'+tonGrp+' .app-chip.on')?.textContent.trim():'';
+  let tl=tlId&&document.getElementById(tlId)?.checked?' + تيل ليفت':'';
+  let spec=vehicle;
+  if(app)spec+=' — '+app+tl;
+  if(ton)spec+=' — '+ton;
+  document.getElementById('fspecs').placeholder='المركبة: '+spec+'\nأضف مواصفاتك هنا...';
+  document.getElementById('fw').hidden=false;
+  document.getElementById('succ').hidden=true;
+  document.getElementById('modal').hidden=false;
+  document.body.style.overflow='hidden';
+}
+function openRFQ(v){
+  if(v){document.getElementById('fspecs').placeholder='المركبة: '+v+'\nأضف مواصفاتك هنا...'}
+  document.getElementById('fw').hidden=false;
+  document.getElementById('succ').hidden=true;
+  document.getElementById('modal').hidden=false;
+  document.body.style.overflow='hidden';
+}
+function closeRFQ(){
+  document.getElementById('modal').hidden=true;
+  document.body.style.overflow='';
+}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeRFQ()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRFQ()});
+function submitRFQ(e){
+  e.preventDefault();
+  const n='FM-'+Date.now().toString(36).toUpperCase().slice(-6);
+  document.getElementById('rnum').textContent=n;
+  document.getElementById('fw').hidden=true;
+  document.getElementById('succ').hidden=false;
+}
+</script>
